@@ -13,6 +13,7 @@
    * 在```config/project.ini```文件中配置各种变量，在feature文件中使用```$name```来引用变量
    * 关于文件上传，将文件放在```files``` 文件夹下，并使用对应的关键字即可
    * 关于使用不用的环境变量，```config/project.ini```文件中配置不同的Section，然后在运行脚本是使用命令```behave -Denv=Prd```，默认情况下使用Default
+   * 默认请求超时时间为5秒
    
 ### 可用关键字
     
