@@ -14,7 +14,7 @@ class HttpRequest(object):
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) '
                           'Chrome/74.0.3729.169 Safari/537.36'}
         self._url = None
-        self._timeout = 60
+        self._timeout = 5
         self._cookies = None
         self._json_data = None
         self._params = None
