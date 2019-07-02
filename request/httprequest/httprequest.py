@@ -79,12 +79,3 @@ class HttpRequest(object):
     def send_request(self, method):
         return requests.request(method, self.url, params=self.params, json=self.json_data, headers=self.header,
                                 files=self.files, cookies=self.cookies, timeout=self.timeout)
-
-
-if __name__ == '__main__':
-    httpresponse = HttpRequest()
-    dic = {'User-Agent': 'Python'}
-    httpresponse.header = dic
-    httpresponse.url = 'https://www.strikingly.com'
-    response = httpresponse.send_request('get')
-    print(response.status_code, response.text)
