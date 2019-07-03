@@ -43,7 +43,7 @@ def set_cookies(context, cookies):
     context.request.cookies = cookies
 
 
-@Step('设置请求超时时间为{timeout:d}秒')
+@Step('设置请求超时时间为{timeout:f}秒')
 def set_timeout(context, timeout):
     logging.info('{} - 设置接口请求超时时间为:{}秒'.format(context.scenario.name, timeout))
     context.request.timeout = timeout

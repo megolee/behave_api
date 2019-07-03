@@ -7,7 +7,8 @@ Feature: Test Feature
   Scenario Outline: 基础测试
 
     When 请求的接口地址是<path>
-    And 设置请求超时时间为5秒
+#    And 设置请求超时时间为5秒 【使用浮点数】
+    And 设置请求超时时间为5.0秒
     Then 发送<method>请求
     And 请求返回的状态码为<number>
     And 使用JsonPath校验结果中的$.headers.Host等于httpbin.org
