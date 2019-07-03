@@ -1,9 +1,13 @@
 Feature: Test Feature
+  
+  Background: 
+    Given 设置全局请求超时时间为0.5秒
 
   @skip
   Scenario Outline: 基础测试
 
     When 请求的接口地址是<path>
+    And 设置请求超时时间为5秒
     Then 发送<method>请求
     And 请求返回的状态码为<number>
     And 使用JsonPath校验结果中的$.headers.Host等于httpbin.org

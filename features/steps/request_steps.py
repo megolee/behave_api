@@ -8,12 +8,13 @@ from behave import *
 import logging
 from string import Template
 from files import file_path
+from request.httprequest.abcrequest import AbcRequest
 from request.httprequest.httprequest import HttpRequest
 
 logging.basicConfig(level=logging.INFO)
 
 
-@When("请求的接口地址是{path}")
+@When('请求的接口地址是{path}')
 def set_url(context, path):
     context.request = HttpRequest()
     if path.startswith('https://') or path.startswith('http://'):
@@ -38,11 +39,11 @@ def add_header(context, content_type):
 @Step('设置Cookies信息为{cookies}')
 def set_cookies(context, cookies):
     cookies = Template(cookies).safe_substitute(context.variable_pool)
-    cookies = {cookie.split('=')[0].strip():cookie.split('=')[1].strip() for cookie in cookies.split(';')}
+    cookies = {cookie.split('=')[0].strip(): cookie.split('=')[1].strip() for cookie in cookies.split(';')}
     context.request.cookies = cookies
 
 
-@Step('设置请求超时时间为{timeout:d}')
+@Step('设置请求超时时间为{timeout:d}秒')
 def set_timeout(context, timeout):
     logging.info('{} - 设置接口请求超时时间为:{}秒'.format(context.scenario.name, timeout))
     context.request.timeout = timeout
@@ -68,10 +69,28 @@ def set_request_params(context):
 @Step('添加上传的文件{key},文件名为{file_name}')
 def add_upload_file(context, key, file_name):
     logging.info(os.path.join(file_path, file_name))
-    context.request.files = {key:open(os.path.join(file_path, file_name), 'rb')}
+    context.request.files = {key: open(os.path.join(file_path, file_name), 'rb')}
 
 
-@Then("发送{method}请求")
+@Step('发送{method}请求')
 def send_request(context, method):
+    logging.info(context.request)
     context.response = context.request.send_request(method)
     logging.info('{} - 得到接口的相应结果为:{}'.format(context.scenario.name, context.response.text))
+
+
+@Given('设置全局请求超时时间为{timeout:f}秒')
+def define_global_timeout(context, timeout):
+    AbcRequest.default_timeout = timeout
+
+
+@Given('设置全局请求头信息为')
+def define_global_timeout(context):
+    AbcRequest.default_header.update(json.loads(str(context.text).replace('\'', '\"')))
+
+
+@Given('设置全局Cookies信息为{cookies}')
+def define_global_timeout(context, cookies):
+    cookies = Template(cookies).safe_substitute(context.variable_pool)
+    cookies = {cookie.split('=')[0].strip(): cookie.split('=')[1].strip() for cookie in cookies.split(';')}
+    AbcRequest.default_cookies = cookies

@@ -3,19 +3,18 @@
 # Created on 2019-05-23
 import logging
 import requests
+from .abcrequest import AbcRequest
 
 logging.basicConfig(level=logging.INFO)
 
 
-class HttpRequest(object):
+class HttpRequest(AbcRequest):
 
     def __init__(self):
-        self._header = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/74.0.3729.169 Safari/537.36'}
+        self._header = self.default_header
+        self._timeout = self.default_timeout
+        self._cookies = self.default_cookies
         self._url = None
-        self._timeout = 5
-        self._cookies = None
         self._json_data = None
         self._params = None
         self._files = {}
@@ -79,3 +78,7 @@ class HttpRequest(object):
     def send_request(self, method):
         return requests.request(method, self.url, params=self.params, json=self.json_data, headers=self.header,
                                 files=self.files, cookies=self.cookies, timeout=self.timeout)
+
+    def __str__(self):
+        return "HttpRequest object with url:{}, params:{}, json:{}, header:{}, files:{}, cookies:{}, timeout:{}".format(
+            self.url, self.params, self.json_data, self.header, self.files, self.cookies, self.timeout)
