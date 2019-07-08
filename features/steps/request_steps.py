@@ -7,6 +7,9 @@ import json
 from behave import *
 import logging
 from string import Template
+
+from requests import RequestException
+
 from files import file_path
 from request.httprequest.abcrequest import AbcRequest
 from request.httprequest.httprequest import HttpRequest
@@ -75,8 +78,11 @@ def add_upload_file(context, key, file_name):
 @Step('发送{method}请求')
 def send_request(context, method):
     logging.info(context.request)
-    context.response = context.request.send_request(method)
-    logging.info('{} - 得到接口的相应结果为:{}'.format(context.scenario.name, context.response.text))
+    try:
+        context.response = context.request.send_request(method)
+        logging.info('{} - 得到接口的相应结果为:{}'.format(context.scenario.name, context.response.text))
+    except RequestException as e:
+        assert hasattr(context, 'response'), '接口请求出错, 错误信息 : {}'.format(e)
 
 
 @Given('设置全局请求超时时间为{timeout:f}秒')
