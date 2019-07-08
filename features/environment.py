@@ -20,7 +20,7 @@ def before_feature(context, feature):
 
 
 def before_scenario(context, scenario):
-    logging.info('{} - 接口请求开始！！！'.format(scenario.name))
+    logging.info('{} - {} - 接口请求开始 {}'.format('='*15, scenario.name, '='*15))
     context.variable_pool = dict()
     context.variable_pool.update(context.suite_dict)
 
@@ -34,4 +34,4 @@ def after_feature(context, feature):
 
 
 def after_scenario(context, scenario):
-    logging.info('{} - 接口请求完成！！！'.format(scenario.name))
+    logging.info('{} - {} - 接口请求完成 {}'.format('='*15, scenario.name, '='*15))
