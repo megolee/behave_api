@@ -5,7 +5,8 @@
 ### 环境要求
    
    * Python3.7
-   * Pipfile中的各种依赖 ```pip install -p Pipfile.lock```
+   * 安装pipenv https://docs.pipenv.org/en/latest/
+   * Pipfile中的各种依赖 ```pipenv install```
    
 ### 使用方法
 
@@ -15,6 +16,7 @@
    * 关于使用不用的环境变量，```config/project.ini```文件中配置不同的Section，然后在运行脚本是使用命令```behave -Denv=Prd```，
    默认情况下使用Default
    * 默认请求超时时间为1秒，可以使用关键字对其进行修改
+   * 使用Allure生成报告 ```behave -f allure_behave.formatter:AllureFormatter -o allure/results```，查看生成的报告 ```allure serve allure/results```
    
 ### 可用关键字
     
