@@ -9,6 +9,7 @@ verify_ssl = true
 behave = "*"
 requests = "*"
 objectpath = "*"
+allure-behave = "*"
 
 [requires]
 python_version = "3.7"
